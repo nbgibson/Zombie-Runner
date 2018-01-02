@@ -5,26 +5,27 @@ using UnityEngine;
 public class Player : MonoBehaviour {
 
     public Transform playerSpawnPoints;
-    public bool reSpawn = false;
 
+    private bool reSpawn = false;
     private Transform[] spawnPoints;
-    private bool lastToggle = false;
+    private bool lastRespawnToggle = false;
+    
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         spawnPoints = playerSpawnPoints.GetComponentsInChildren<Transform>();
-	}
+    }
 	
 	// Update is called once per frame
 	void Update () {
-		if(lastToggle != reSpawn)
+		if(lastRespawnToggle != reSpawn)
         {
             Respawn();
             reSpawn = false;
         }
         else
         {
-            lastToggle = reSpawn;
+            lastRespawnToggle = reSpawn;
         }
 	}
 
@@ -32,5 +33,16 @@ public class Player : MonoBehaviour {
     {
         int i = Random.Range(1, spawnPoints.Length);
         transform.position = spawnPoints[i].position;
+    }
+
+    void OnFindClearArea()
+    {
+        Debug.Log("Flare?");
+        Invoke("DropFlare", 3f);
+    }
+
+    void DropFlare()
+    {
+        //drop a flare
     }
 }
